@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agronion - Waste Marketplace</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- CSS File -->
+<link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">AgroNion</div>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="/login.html">Login</a></li>
+        <li><a href="/signup.html">Signup</a></li>
+    </ul>
+
+    <div class="menu-icon" id="menu" >
+        <i class="fa-solid fa-bars"></i>
+    </div>
+</nav>
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+    <a href="#" class="close-btn" id="close">&times;</a>
+
+    <ul>
+        <li><a href="#">About us</a></li>
+        <li><a href="/login.html">Login</a></li>
+        <li><a href="/signup.html">Signup</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Turning Waste Into Opportunity</h1>
+        <p>Buy & Sell agricultural waste easily with Agronion Marketplace.</p>
+
+
+        <!-- ACTION BUTTONS -->
+        <div class="action-buttons">
+            <button class="list-btn">
+                <a href="/farmer.html" style="text-decoration: none; color: #285f1d;">
+                <i class="fa-solid fa-plus-circle"></i> List Your Waste Product
+                </a>
+            </button>
+
+            <button class="buy-btn">
+                <a href="#search-box" style="text-decoration: none; color: #285f1d;">
+                <i class="fa-solid fa-cart-shopping"></i> Buy Waste Product
+                </a>
+            </button>
+        </div>
+    </div>
+
+    <div class="hero-img">
+        <img src="./images/pexels-quang-nguyen-vinh-222549-2518861.jpg">
+
+    </div>
+
+    <!-- SEARCH BAR -->
+        <div class="search-box" id="search-box">
+            <input type="text"  id="searchInput" placeholder="Search waste products...">
+            <button><i class="fa-solid fa-search"></i></button>
+        </div>
+        
+</section>
+
+
+    <div id="cardContainer" class="card-container"></div>
+
+<script type="module">
+
+import { db, auth } from "./firebase.js";
+import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+const usersRef = ref(db, "users");
+const container = document.getElementById("cardContainer");
+const searchInput = document.getElementById("searchInput");
+
+let allWasteData = []; // store Firebase data
+
+/* ================= LOAD DATA FROM FIREBASE ================= */
+onValue(usersRef, (snapshot) => {
+    const data = snapshot.val();
+    allWasteData = [];
+
+    if (!data) {
+        container.innerHTML = "<p>No listings yet...</p>";
+        return;
+    }
+
+    Object.keys(data).forEach(id => {
+        allWasteData.push(data[id]);
+    });
+
+    renderCards(allWasteData);
+});
+
+/* ================= RENDER CARDS ================= */
+function renderCards(data) {
+    container.innerHTML = "";
+
+    if (data.length === 0) {
+        container.innerHTML = "<p>No matching results found</p>";
+        return;
+    }
+
+    data.forEach(item => {
+        const card = `
+            <div class="card">
+                <div class="card-header">
+                    <div class="user-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <div class="waste-type">${item.wasteType}</div>
+                        <div style="font-size:13px; color:#666;">
+                            Posted by: ${item.name}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details">
+                    <div>
+                        <i class="fa-solid fa-weight-hanging"></i>
+                        Quantity: ${item.quantity} tons
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-location-dot"></i>
+                        Location: ${item.location}
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-truck-fast"></i>
+                        Delivery Time: <b>${item.deliveryTime}</b>
+                    </div>
+                </div>
+
+                <a class="whatsapp-btn"
+                   href="https://wa.me/8177941017"
+                   target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Contact on WhatsApp
+                </a>
+            </div>
+        `;
+
+        container.innerHTML += card;
+    });
+}
+
+/* ================= SEARCH LOGIC ================= */
+searchInput.addEventListener("input", () => {
+    const searchValue = searchInput.value.toLowerCase();
+
+    const filteredData = allWasteData.filter(item =>
+        item.wasteType.toLowerCase().includes(searchValue) ||
+        item.location.toLowerCase().includes(searchValue) ||
+        item.name.toLowerCase().includes(searchValue)
+    );
+
+    renderCards(filteredData);
+});
+
+/* ================= SIDEBAR LOGIC ================= */
+document.getElementById("menu").onclick = function () {
+    document.getElementById("sidebar").style.display = "flex";
+};
+
+document.getElementById("close").onclick = function () {
+    document.getElementById("sidebar").style.display = "none";
+};
+</script>
+
+
+</body>
+</html>

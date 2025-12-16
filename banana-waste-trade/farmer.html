@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmer Waste Listing</title>
+
+    <!-- Link CSS file -->
+    <link rel="stylesheet" href="farmer.css">
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>Farmer Waste Listing</h2>
+
+        <form id="wasteForm" class="waste-form">
+            <label>Farmer Name</label>
+            <input type="text" id="name" placeholder="Enter farmer name" required>
+
+            <label>Location</label>
+            <input type="text" id="location" placeholder="Enter location" required>
+
+            <label>Contact No</label>
+            <input type="tel" id="contact" placeholder="Enter contact number" required>
+
+            <label>Waste Type</label>
+            <select id="wasteType" required>
+                <option value="">Select waste type</option>
+                <option>Banana Waste</option>
+                <option>Grass</option>
+                <option>Cow Dunk</option>
+            </select>
+
+            <label>Quantity (in Tons)</label>
+            <input type="number" id="quantity" placeholder="Enter quantity" required>
+
+            <label>Delivery Time</label>
+            <select id="deliveryTime" required>
+                <option value="">Select delivery time</option>
+                <option>Immediate</option>
+                <option>1 Week</option>
+                <option>1 Month</option>
+            </select>
+
+            <button type="button" id="submit" onclick=showWindow()><a>Submit Listing</a></button>
+
+        </form>
+    </div>
+
+     <div class="success" id="successMessage">
+         ✔️ Your waste listing has been submitted!
+    </div>
+
+    <div class="blur-screen" id="blurScreen"></div>
+
+
+
+    <script>
+        // function showWindow(){
+        //     var show = document.querySelector(".success");
+        //     show.style.display = "flex";
+        // }
+        // document.getElementById("wasteForm").addEventListener("submit", function (e) {
+        //     e.preventDefault();
+
+        //     document.getElementById("successMessage").style.display = "block";
+
+        //     setTimeout(() => {
+        //         document.getElementById("successMessage").style.display = "none";
+        //         document.getElementById("wasteForm").reset();
+        //     }, 2500);
+        // });
+    </script>
+
+<script type="module" src="/controller.js"></script>
+<script type="module" src="/firebase.js"></script>
+
+</body>
+</html>

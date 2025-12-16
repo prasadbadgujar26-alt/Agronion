@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: #e8f5e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    margin-top: 200px;
+    background: #ffffff;
+    width: 450px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-top: 6px solid #4caf50;
+    animation: fadeIn 0.7s ease-in-out;
+}
+.waste-form {
+    margin-right: 30px ;
+    }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    text-align: center;
+    color: #2e7d32;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 600;
+    color: #2e7d32;
+    display: block;
+    margin-bottom: 6px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border: 2px solid #a5d6a7;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    transition: 0.25s;
+}
+
+input:focus, select:focus {
+    border-color: #43a047;
+    box-shadow: 0 0 8px rgba(67, 160, 71, 0.4);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #43a047;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #2e7d32;
+}
+
+/* Success Popup Styling */
+.success {
+    height: 100px;
+    display: none;           /* hidden by default (flex-none logic) */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    background: #4caf4ff5;
+    color: rgb(255, 255, 255);
+    padding: 15px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+}
+.blur-screen {
+    position: fixed;
+    inset: 0px;
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.274);
+    display: none;               /* hidden by default */
+}
+
+
